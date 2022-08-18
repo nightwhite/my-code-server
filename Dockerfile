@@ -11,7 +11,7 @@ RUN mkdir /home/coder/project
 RUN mkdir -p /home/coder/.ssh
 COPY --chown=coder:coder ./ssh/config /home/coder/.ssh/config
 
-RUN --mount=type=secret,id=host_ssh_key,uid=1000,dst=/run/secrets/host_ssh_key
+RUN --mount=type=secret,id=host_ssh_key,uid=1000,dst=/run/secrets/host_ssh_key cat /run/secrets/host_ssh_key
 RUN ln -s /run/secrets/host_ssh_key ~/.ssh/id_rsa
 
 
