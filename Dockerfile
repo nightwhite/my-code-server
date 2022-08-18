@@ -21,7 +21,7 @@ RUN git config --global --add pull.rebase false \
     &&  git config --global alias.pullall '!git pull && git submodule update --init --recursive'
 
 # node env
-RUN curl -o- https://ghproxy.com/https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh >> /home/coder/install_nvm.sh \
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh >> /home/coder/install_nvm.sh \
     && . /home/coder/install_nvm.sh \
     && rm -rf /home/coder/install_nvm.sh
 
@@ -33,7 +33,7 @@ RUN source ~/.nvm/nvm.sh \
     && nvm use default
 
 # zsh
-RUN curl -o- https://ghproxy.com/https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh >> ~/oh_my_zsh.sh \
+RUN curl -o- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh >> ~/oh_my_zsh.sh \
   && echo 'y' | . ~/oh_my_zsh.sh \
   && rm -rf  ~/oh_my_zsh.sh \
   && git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions \
