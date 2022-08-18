@@ -10,7 +10,6 @@ RUN mkdir /home/coder/project
 # ssh config
 RUN mkdir -p /home/coder/.ssh
 COPY --chown=coder:coder ./ssh/config /home/coder/.ssh/config
-RUN ln -s /run/secrets/host_ssh_key ~/.ssh/id_rsa
 
 
 
