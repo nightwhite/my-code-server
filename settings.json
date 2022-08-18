@@ -1,0 +1,9 @@
+{
+    "workbench.colorTheme": "Material Theme",
+    "workbench.iconTheme": "eq-material-theme-icons",
+    "terminal.integrated.defaultProfile.linux": "zsh",
+    "tabnine.experimentalAutoImports": true,
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    "explorer.confirmDragAndDrop": false
+  }
