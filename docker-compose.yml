@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  cs:
+    build: .
+    ports:
+      - "1024:8080"
+    volumes:
+      - "csdata:/home/coder/project"
+    environment:
+      PASSWORD: ${PASSWORD:-12345678}
+    restart: always
+
+volumes:
+  csdata:
