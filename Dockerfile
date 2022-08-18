@@ -1,4 +1,3 @@
-#syntax=docker/dockerfile-upstream:master-experimental
 FROM codercom/code-server:latest
 
 SHELL ["/bin/bash", "-c"]
