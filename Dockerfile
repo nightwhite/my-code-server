@@ -7,12 +7,6 @@ USER coder
 # project volume
 RUN mkdir /home/coder/project
 
-# ssh config
-RUN mkdir -p /home/coder/.ssh
-COPY --chown=coder:coder ./ssh/config /home/coder/.ssh/config
-
-
-
 # git config
 RUN git config --global --add pull.rebase false \
     && git config --global --add user.name beimengyeyu \
