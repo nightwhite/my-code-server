@@ -1,3 +1,4 @@
+#syntax=docker/dockerfile-upstream:master-experimental
 FROM codercom/code-server:latest
 
 SHELL ["/bin/bash", "-c"]
@@ -10,8 +11,6 @@ RUN mkdir /home/coder/project
 # ssh config
 RUN mkdir -p /home/coder/.ssh
 COPY --chown=coder:coder ./ssh/config /home/coder/.ssh/config
-
-RUN --mount=type=secret,id=host_ssh_key,uid=1000
 RUN ln -s /run/secrets/host_ssh_key ~/.ssh/id_rsa
 
 
