@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  cs:
+  code-server:
     build: .
     ports:
       - "1024:8080"
