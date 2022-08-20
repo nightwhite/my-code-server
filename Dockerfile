@@ -22,7 +22,8 @@ RUN source ~/.nvm/nvm.sh \
     && nvm use default
 
 # java env
-RUN sudo apt install -y openjdk-11-jdk
+RUN sudo apt install -y openjdk-11-jdk \
+    openjdk-17-jdk
 
 # zsh
 RUN curl -o- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh >> ~/oh_my_zsh.sh \
