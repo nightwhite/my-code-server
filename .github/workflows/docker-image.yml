@@ -27,3 +27,4 @@ jobs:
           context: .
           push: true
           tags: nightwhite634/code-server-node:${{ steps.get_sha.outputs.SHA_SHORT }}
+          args: --no-cache
