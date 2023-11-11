@@ -47,7 +47,7 @@ USER root
 RUN [ -d /home/tmp ] || mv /home/coder /home/tmp
 
 # Your existing logic
-RUN echo '#!/bin/bash\n\nif [ ! -d "/home/coder/.nvm" ]; then\n  mv /home/tmp /home/coder\nfi' > /home/init.sh \
-    && chmod +x /home/init.sh
+# RUN echo '#!/bin/bash\n\nif [ ! -d "/home/coder/.nvm" ]; then\n  mv /home/tmp /home/coder\nfi' > /home/init.sh \
+#     && chmod +x /home/init.sh
 
 USER coder
