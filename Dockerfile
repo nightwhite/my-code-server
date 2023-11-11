@@ -22,8 +22,8 @@ SHELL ["/bin/zsh", "-c"]
 
 # Install VSCode extensions
 RUN HOME=/home/coder code-server \
-    --user-data-dir=/home/coder/.local/share/code-server \
-    --install-extension equinusocio.vsc-material-theme \
+	--user-data-dir=/home/coder/.local/share/code-server \
+	--install-extension equinusocio.vsc-material-theme \
     --install-extension k--kato.intellij-idea-keybindings \
     --install-extension eamodio.gitlens \
     --install-extension tabnine.tabnine-vscode \
@@ -34,19 +34,19 @@ COPY --chown=coder:coder settings.json /home/coder/.local/share/code-server/User
 
 # Install NVM and Node.js 18
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
-    && chmod +x /home/startup.sh \
-    && . /home/startup.sh \
+    && echo 'source /home/coder/.nvm/nvm.sh' >> /home/coder/.bashrc \
+    && echo 'source /home/coder/.nvm/nvm.sh' >> /home/coder/.zshrc \
     && . /home/coder/.nvm/nvm.sh \
     && nvm install 18 \
     && nvm alias default 18 \
     && nvm use default
-    && echo '#!/bin/bash' >> /home/startup.sh \
-    && echo 'if [ ! -d "/home/coder/.nvm" ]; then' >> /home/startup.sh \
-    && echo '  cp -r /home/tmp/* /home/coder/' >> /home/startup.sh \
-    && echo 'fi' >> /home/startup.sh \
 
-# Create a volume for projects
-RUN mkdir /home/coder/project
+# Create a temporary directory and copy its contents to /home/coder/
+RUN mkdir /home/tmp \
+    && cp -r /home/coder/* /home/tmp/
 
-# Set startup script as CMD
-CMD ["/home/startup.sh"]
+# Your existing logic
+RUN echo '#!/bin/bash\n\nif [ ! -d "/home/coder/.nvm" ]; then\n  cp -r /home/tmp/* /home/coder/\nfi' > /usr/bin/entrypoint.sh \
+    && chmod +x /usr/bin/entrypoint.sh
+
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
