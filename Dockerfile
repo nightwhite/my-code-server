@@ -32,8 +32,8 @@ RUN HOME=/home/coder code-server \
 # Copy VSCode settings
 COPY --chown=coder:coder settings.json /home/coder/.local/share/code-server/User/settings.json
 
-# Create a volume for projects
-RUN mkdir /home/coder/project
+# Create a volume for the entire /home/coder/ directory
+VOLUME /home/coder/
 
 # Install NVM and Node.js 18
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
