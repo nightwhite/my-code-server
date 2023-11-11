@@ -11,14 +11,6 @@ RUN sudo apt-get update \
     curl \
     git
 
-# Install NVM and Node.js 18
-ENV NVM_DIR /home/coder/.nvm
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
-    && source $NVM_DIR/nvm.sh \
-    && nvm install 18 \
-    && nvm alias default 18 \
-    && nvm use default
-
 # Install Zsh and Oh My Zsh
 RUN curl -o- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash \
   && git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions \
@@ -42,3 +34,11 @@ COPY --chown=coder:coder settings.json /home/coder/.local/share/code-server/User
 
 # Create a volume for projects
 RUN mkdir /home/coder/project
+
+# Install NVM and Node.js 18
+ENV NVM_DIR /home/coder/.nvm
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
+    && source $NVM_DIR/nvm.sh \
+    && nvm install 18 \
+    && nvm alias default 18 \
+    && nvm use default
