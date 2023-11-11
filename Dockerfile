@@ -34,12 +34,19 @@ COPY --chown=coder:coder settings.json /home/coder/.local/share/code-server/User
 
 # Install NVM and Node.js 18
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
-    && echo 'source /home/coder/.nvm/nvm.sh' >> /home/coder/.bashrc \
-    && echo 'source /home/coder/.nvm/nvm.sh' >> /home/coder/.zshrc \
+    && chmod +x /home/startup.sh \
+    && . /home/startup.sh \
     && . /home/coder/.nvm/nvm.sh \
     && nvm install 18 \
     && nvm alias default 18 \
     && nvm use default
+    && echo '#!/bin/bash' >> /home/startup.sh \
+    && echo 'if [ ! -d "/home/coder/.nvm" ]; then' >> /home/startup.sh \
+    && echo '  cp -r /home/tmp/* /home/coder/' >> /home/startup.sh \
+    && echo 'fi' >> /home/startup.sh \
 
-# Copy contents of /home/coder/ to /home/tmp/
-RUN cp -r /home/coder/* /home/tmp/
+# Create a volume for projects
+RUN mkdir /home/coder/project
+
+# Set startup script as CMD
+CMD ["/home/startup.sh"]
