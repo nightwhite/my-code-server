@@ -4,9 +4,6 @@ SHELL ["/bin/bash", "-c"]
 
 USER coder
 
-# Define a volume for /home/coder
-VOLUME /home/coder
-
 # Install linux apps
 RUN sudo apt-get update \
  && sudo apt-get install -y \
@@ -43,3 +40,6 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
     && nvm install 18 \
     && nvm alias default 18 \
     && nvm use default
+
+# Copy contents of /home/coder/ to /home/tmp/
+RUN cp -r /home/coder/* /home/tmp/
