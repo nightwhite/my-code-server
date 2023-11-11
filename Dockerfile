@@ -36,9 +36,8 @@ COPY --chown=coder:coder settings.json /home/coder/.local/share/code-server/User
 RUN mkdir /home/coder/project
 
 # Install NVM and Node.js 18
-ENV NVM_DIR /home/coder/.nvm
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
-    && source $NVM_DIR/nvm.sh \
+    && source /home/coder/.nvm/nvm.sh \
     && nvm install 18 \
     && nvm alias default 18 \
     && nvm use default
