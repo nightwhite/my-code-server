@@ -47,7 +47,7 @@ USER root
 RUN [ -d /home/tmp ] || mv /home/coder /home/tmp
 
 # Your existing logic
-RUN echo '#!/bin/bash\n\nif [ ! -d "/home/coder/.nvm" ]; then\n  cp -r /home/tmp/* /home/coder/\nfi' > /usr/bin/entrypoint.sh \
+RUN echo '#!/bin/bash\n\nif [ ! -d "/home/coder/.nvm" ]; then\n  mv /home/tmp /home/coder\nfi' > /usr/bin/entrypoint.sh \
     && chmod +x /usr/bin/entrypoint.sh
 
 USER coder
