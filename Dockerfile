@@ -43,7 +43,7 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
 
 # Create a temporary directory and copy its contents to /home/coder/
 RUN mkdir /home/tmp \
-    && cp -r /home/coder/. /home/tmp/
+    && cp -r /home/coder /home/tmp
 
 # Your existing logic
 RUN echo '#!/bin/bash\n\nif [ ! -d "/home/coder/.nvm" ]; then\n  cp -r /home/tmp/* /home/coder/\nfi' > /usr/bin/entrypoint.sh \
