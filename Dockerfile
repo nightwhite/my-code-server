@@ -45,10 +45,11 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
 SHELL ["/bin/bash", "-c"]
 USER root
 RUN [ -d /home/tmp ] || mv /home/coder /home/tmp
-USER coder
 
 # Your existing logic
 RUN echo '#!/bin/bash\n\nif [ ! -d "/home/coder/.nvm" ]; then\n  cp -r /home/tmp/* /home/coder/\nfi' > /usr/bin/entrypoint.sh \
     && chmod +x /usr/bin/entrypoint.sh
+
+USER coder
 
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
