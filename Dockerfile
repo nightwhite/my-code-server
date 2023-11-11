@@ -42,6 +42,7 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
     && nvm use default
 
 # Create a temporary directory and copy its contents to /home/coder/
+SHELL ["/bin/bash", "-c"]
 RUN mkdir /home/tmp \
     && cp -r /home/coder /home/tmp
 
