@@ -4,40 +4,35 @@ SHELL ["/bin/bash", "-c"]
 
 USER coder
 
-# linux app
+# Install linux apps
 RUN sudo apt-get update \
  && sudo apt-get install -y \
-    vim 
+    vim \
+    curl \
+    git
 
-# node env
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh >> /home/coder/install_nvm.sh \
-    && . /home/coder/install_nvm.sh \
-    && rm -rf /home/coder/install_nvm.sh
-
-ENV NODE_VERSION 14.18.0
-
-RUN source ~/.nvm/nvm.sh \
-    && nvm install $NODE_VERSION \
-    $$ nvm alias default $NODE_VERSION \
+# Install NVM and Node.js 18
+ENV NVM_DIR /home/coder/.nvm
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
+    && source $NVM_DIR/nvm.sh \
+    && nvm install 18 \
+    && nvm alias default 18 \
     && nvm use default
 
-# java env
+# Install Java
 RUN sudo apt install -y openjdk-11-jdk \
     openjdk-17-jdk
 
-# zsh
-RUN curl -o- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh >> ~/oh_my_zsh.sh \
-  && echo 'y' | . ~/oh_my_zsh.sh \
-  && rm -rf  ~/oh_my_zsh.sh \
+# Install Zsh and Oh My Zsh
+RUN curl -o- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash \
   && git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions \
   && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting \
-  && sed -i "s/plugins=(git.*)$/plugins=(git zsh-syntax-highlighting zsh-autosuggestions)/" ~/.zshrc 
+  && sed -i "s/plugins=(git.*)$/plugins=(git zsh-syntax-highlighting zsh-autosuggestions)/" ~/.zshrc
 
- # default bash
-RUN echo "dash dash/sh boolean false" | sudo debconf-set-selections
-RUN sudo DEBIAN_FRONTEND=noninteractive dpkg-reconfigure dash
+# Set Zsh as the default shell
+SHELL ["/bin/zsh", "-c"]
 
-# git config
+# Configure Git
 RUN git config --global --add pull.rebase false \
     && git config --global --add user.name beimengyeyu \
     && git config --global --add user.email me@beimengyeyu.com \
@@ -45,7 +40,7 @@ RUN git config --global --add pull.rebase false \
     && git config --global init.defaultBranch master \
     && git config --global alias.pullall '!git pull && git submodule update --init --recursive'
 
-# vscode plugin
+# Install VSCode extensions
 RUN HOME=/home/coder code-server \
 	--user-data-dir=/home/coder/.local/share/code-server \
 	--install-extension equinusocio.vsc-material-theme \
@@ -54,7 +49,8 @@ RUN HOME=/home/coder code-server \
     --install-extension tabnine.tabnine-vscode \
     --install-extension vscjava.vscode-java-pack
 
+# Copy VSCode settings
 COPY --chown=coder:coder settings.json /home/coder/.local/share/code-server/User/settings.json
 
-# project volume
+# Create a volume for projects
 RUN mkdir /home/coder/project
