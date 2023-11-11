@@ -22,8 +22,8 @@ SHELL ["/bin/zsh", "-c"]
 
 # Install VSCode extensions
 RUN HOME=/home/coder code-server \
-	--user-data-dir=/home/coder/.local/share/code-server \
-	--install-extension equinusocio.vsc-material-theme \
+    --user-data-dir=/home/coder/.local/share/code-server \
+    --install-extension equinusocio.vsc-material-theme \
     --install-extension k--kato.intellij-idea-keybindings \
     --install-extension eamodio.gitlens \
     --install-extension tabnine.tabnine-vscode \
@@ -40,3 +40,6 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
     && nvm install 18 \
     && nvm alias default 18 \
     && nvm use default
+
+# Define a volume for /home/coder
+VOLUME /home/coder
