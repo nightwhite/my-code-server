@@ -40,14 +40,3 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
     && nvm install 18 \
     && nvm alias default 18 \
     && nvm use default
-
-# Create a temporary directory and copy its contents to /home/coder/
-SHELL ["/bin/bash", "-c"]
-USER root
-RUN [ -d /home/tmp ] || mv /home/coder /home/tmp
-
-# Your existing logic
-# RUN echo '#!/bin/bash\n\nif [ ! -d "/home/coder/.nvm" ]; then\n  mv /home/tmp /home/coder\nfi' > /home/init.sh \
-#     && chmod +x /home/init.sh
-
-USER coder
