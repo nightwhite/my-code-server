@@ -39,5 +39,10 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
     && . /home/coder/.nvm/nvm.sh \
     && nvm install 18 \
     && nvm alias default 18 \
-    && nvm use default \
-    && node install -g laf-cli@latest
+    && nvm use default 
+
+# Set custom npm directory
+RUN mkdir /home/coder/npm-global \
+    && npm config set prefix '/home/coder/npm-global'
+
+ENV PATH="/home/coder/npm-global/bin:${PATH}"
