@@ -48,3 +48,9 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
     && echo 'export PATH="/home/coder/npm-global/bin:$PATH"' >> /home/coder/.zshrc 
 
 ENV PATH="/home/coder/npm-global/bin:${PATH}"
+
+# 将启动脚本复制到镜像中
+COPY start.sh /start.sh
+
+# 设置脚本为容器的入口点
+ENTRYPOINT ["/start.sh"]
