@@ -23,11 +23,8 @@ SHELL ["/bin/zsh", "-c"]
 # Install VSCode extensions
 RUN HOME=/home/coder code-server \
 	--user-data-dir=/home/coder/.local/share/code-server \
-	--install-extension equinusocio.vsc-material-theme \
-    --install-extension k--kato.intellij-idea-keybindings \
-    --install-extension eamodio.gitlens \
-    --install-extension tabnine.tabnine-vscode \
-    --install-extension vscjava.vscode-java-pack
+    	--install-extension ms-ceintl.vscode-language-pack-zh-hans \
+    	--install-extension NightWhite.laf-assistant
 
 # Copy VSCode settings
 COPY --chown=coder:coder settings.json /home/coder/.local/share/code-server/User/settings.json
