@@ -20,11 +20,14 @@ RUN curl -o- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/inst
 # Set Zsh as the default shell
 SHELL ["/bin/zsh", "-c"]
 
+# Copy the VSCode extensions laf-assistant
+COPY NightWhite.laf-assistant-1.0.14.vsix /home/coder/NightWhite.laf-assistant-1.0.14.vsix
+
 # Install VSCode extensions
 RUN HOME=/home/coder code-server \
-	--user-data-dir=/home/coder/.local/share/code-server \
-    	--install-extension ms-ceintl.vscode-language-pack-zh-hans \
-    	--install-extension NightWhite.laf-assistant
+    --user-data-dir=/home/coder/.local/share/code-server \
+    --install-extension ms-ceintl.vscode-language-pack-zh-hans \
+    --install-extension /home/coder/NightWhite.laf-assistant-1.0.14.vsix
 
 # Copy VSCode settings
 COPY --chown=coder:coder settings.json /home/coder/.local/share/code-server/User/settings.json
