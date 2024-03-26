@@ -10,15 +10,6 @@ RUN sudo apt-get update \
     curl \
     git
 
-# Install Zsh and Oh My Zsh
-RUN curl -o- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash \
-  && git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions \
-  && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting \
-  && sed -i "s/plugins=(git.*)$/plugins=(git zsh-syntax-highlighting zsh-autosuggestions)/" ~/.zshrc
-
-# Set Zsh as the default shell
-SHELL ["/bin/zsh", "-c"]
-
 # Copy the VSCode extension laf-assistant zh
 COPY MS-CEINTL.vscode-language-pack-zh-hans-1.87.0.vsix /home/MS-CEINTL.vscode-language-pack-zh-hans-1.87.0.vsix
 COPY NightWhite.laf-assistant-1.0.14.vsix /home/NightWhite.laf-assistant-1.0.14.vsix
