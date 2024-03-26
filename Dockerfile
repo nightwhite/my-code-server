@@ -2,7 +2,7 @@ FROM codercom/code-server:latest
 
 SHELL ["/bin/bash", "-c"]
 
-USER root
+USER coder
 # Install Linux apps
 RUN sudo apt-get update \
  && sudo apt-get install -y \
@@ -49,6 +49,7 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
 ENV PATH="/home/coder/npm-global/bin:${PATH}"
 
 # 将启动脚本复制到镜像中
+USER root
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 USER coder
