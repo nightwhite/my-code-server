@@ -2,8 +2,7 @@ FROM codercom/code-server:latest
 
 SHELL ["/bin/bash", "-c"]
 
-USER coder
-
+USER root
 # Install Linux apps
 RUN sudo apt-get update \
  && sudo apt-get install -y \
@@ -51,9 +50,8 @@ ENV PATH="/home/coder/npm-global/bin:${PATH}"
 
 # 将启动脚本复制到镜像中
 COPY start.sh /start.sh
-
-# 然后修改 start.sh 的权限
 RUN chmod +x /start.sh
+USER coder
 
 # 设置脚本为容器的入口点
 ENTRYPOINT ["/start.sh"]
