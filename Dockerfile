@@ -39,5 +39,5 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
     && . /home/coder/.nvm/nvm.sh \
     && nvm install 18 \
     && nvm alias default 18 \
-    && nvm use default
+    && nvm use default \
     && node install -g laf-cli@latest
