@@ -4,7 +4,7 @@ SHELL ["/bin/bash", "-c"]
 
 USER coder
 
-# Install linux apps
+# Install Linux apps
 RUN sudo apt-get update \
  && sudo apt-get install -y \
     vim \
@@ -20,7 +20,7 @@ RUN curl -o- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/inst
 # Set Zsh as the default shell
 SHELL ["/bin/zsh", "-c"]
 
-# Copy the VSCode extensions laf-assistant
+# Copy the VSCode extension laf-assistant
 COPY NightWhite.laf-assistant-1.0.14.vsix /home/coder/NightWhite.laf-assistant-1.0.14.vsix
 
 # Install VSCode extensions
@@ -32,17 +32,17 @@ RUN HOME=/home/coder code-server \
 # Copy VSCode settings
 COPY --chown=coder:coder settings.json /home/coder/.local/share/code-server/User/settings.json
 
-# Install NVM and Node.js 18
+# Install NVM, Node.js 18, and set custom npm directory
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
-    && echo 'source /home/coder/.nvm/nvm.sh' >> /home/coder/.bashrc \
-    && echo 'source /home/coder/.nvm/nvm.sh' >> /home/coder/.zshrc \
+    && echo 'export NVM_DIR="$HOME/.nvm"' >> /home/coder/.zshrc \
+    && echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> /home/coder/.zshrc \
+    && echo 'export PATH="$NVM_DIR/versions/node/$(nvm current)/bin:$PATH"' >> /home/coder/.zshrc \
     && . /home/coder/.nvm/nvm.sh \
     && nvm install 18 \
     && nvm alias default 18 \
-    && nvm use default 
-
-# Set custom npm directory
-RUN mkdir /home/coder/npm-global \
-    && npm config set prefix '/home/coder/npm-global'
+    && nvm use default \
+    && mkdir /home/coder/npm-global \
+    && npm config set prefix '/home/coder/npm-global' \
+    && echo 'export PATH="/home/coder/npm-global/bin:$PATH"' >> /home/coder/.zshrc 
 
 ENV PATH="/home/coder/npm-global/bin:${PATH}"
