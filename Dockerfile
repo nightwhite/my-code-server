@@ -50,6 +50,7 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
 ENV PATH="/home/coder/npm-global/bin:${PATH}"
 
 # 将启动脚本复制到镜像中
+RUN chmod +x start.sh
 COPY start.sh /start.sh
 
 # 设置脚本为容器的入口点
