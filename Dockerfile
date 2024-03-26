@@ -21,16 +21,17 @@ RUN curl -o- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/inst
 SHELL ["/bin/zsh", "-c"]
 
 # Copy the VSCode extension laf-assistant
-COPY NightWhite.laf-assistant-1.0.14.vsix /home/coder/NightWhite.laf-assistant-1.0.14.vsix
+COPY NightWhite.laf-assistant-1.0.14.vsix /home/NightWhite.laf-assistant-1.0.14.vsix
 
 # Install VSCode extensions
 RUN HOME=/home/coder code-server \
     --user-data-dir=/home/coder/.local/share/code-server \
     --install-extension ms-ceintl.vscode-language-pack-zh-hans \
-    --install-extension /home/coder/NightWhite.laf-assistant-1.0.14.vsix
+    --install-extension /home/NightWhite.laf-assistant-1.0.14.vsix
 
 # Copy VSCode settings
 COPY --chown=coder:coder settings.json /home/coder/.local/share/code-server/User/settings.json
+COPY --chown=coder:coder argv.json /home/coder/.local/share/code-server/User/argv.json
 
 # Install NVM, Node.js 18, and set custom npm directory
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
