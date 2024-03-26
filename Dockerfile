@@ -26,7 +26,6 @@ COPY NightWhite.laf-assistant-1.0.14.vsix /home/NightWhite.laf-assistant-1.0.14.
 # Install VSCode extensions
 RUN HOME=/home/coder code-server \
     --user-data-dir=/home/coder/.local/share/code-server \
-    --install-extension /home/MS-CEINTL.vscode-language-pack-zh-hans-1.87.0.vsix \
     --install-extension /home/NightWhite.laf-assistant-1.0.14.vsix
 
 # Copy VSCode settings
@@ -47,12 +46,3 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
     && echo 'export PATH="/home/coder/npm-global/bin:$PATH"' >> /home/coder/.zshrc 
 
 ENV PATH="/home/coder/npm-global/bin:${PATH}"
-
-# 将启动脚本复制到镜像中
-USER root
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
-USER coder
-
-# 设置脚本为容器的入口点
-ENTRYPOINT ["/start.sh"]
